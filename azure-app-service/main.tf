@@ -52,7 +52,7 @@ resource "null_resource" "deploy_code" {
   }
 }
 
-output "webapp_endpoint" {
+output "endpoint" {
   value = "https://${azurerm_app_service.webapp.default_site_hostname}"
 }
 
