@@ -24,6 +24,14 @@ resource "azurerm_sql_server" "default" {
   tags = data.azurerm_resource_group.sandbox_rg.tags
 }
 
+resource "azurerm_sql_firewall_rule" "allow_azure_services" {
+  name                = "AllowAzureServices"
+  resource_group_name = data.azurerm_resource_group.sandbox_rg.name
+  server_name         = azurerm_sql_server.default.name
+  start_ip_address    = "0.0.0.0"
+  end_ip_address      = "0.0.0.0"
+}
+
 resource "azurerm_sql_database" "default" {
   name                = "${var.SERVICE_NAME}-db"
   resource_group_name = data.azurerm_resource_group.sandbox_rg.name
