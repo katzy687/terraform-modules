@@ -13,7 +13,7 @@ data "azurerm_app_service_plan" "plan" {
 }
 
 locals {
-    webapp_name = "appservice-${var.SANDBOX_ID}-${var.SERVICE_NAME}"
+    webapp_name = "${var.SERVICE_NAME}-${var.SANDBOX_ID}"
 }
 
 resource "azurerm_app_service" "webapp" {
