@@ -7,5 +7,7 @@ variable SERVICE_NAME {
 variable "DB_USERNAME" {
     default = "adminuser"
 }
-
+variable "DB_NAME" {
+    default = ""
+}
 

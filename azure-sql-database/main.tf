@@ -33,7 +33,7 @@ resource "azurerm_sql_firewall_rule" "allow_azure_services" {
 }
 
 resource "azurerm_sql_database" "default" {
-  name                = "${var.SERVICE_NAME}-db"
+  name                = "${var.DB_NAME}"
   resource_group_name = data.azurerm_resource_group.sandbox_rg.name
   location            = data.azurerm_resource_group.sandbox_rg.location
   server_name         = azurerm_sql_server.default.name
@@ -44,6 +44,19 @@ resource "azurerm_sql_database" "default" {
   tags = data.azurerm_resource_group.sandbox_rg.tags
 }
 
-output "connection_string" {
-  value = "Server=tcp:${azurerm_sql_server.default.fully_qualified_domain_name},1433;Initial Catalog=${azurerm_sql_database.default.name};Persist Security Info=False;User ID=${var.DB_USERNAME};Password=${random_password.db_password.result};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+# output "connection_string" {
+#   value = "Server=tcp:${azurerm_sql_server.default.fully_qualified_domain_name},1433;Initial Catalog=${azurerm_sql_database.default.name};Persist Security Info=False;User ID=${var.DB_USERNAME};Password=${random_password.db_password.result};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+# }
+
+output "DB_HOSTNAME" {
+  value = azurerm_sql_server.default.fully_qualified_domain_name
+}
+output "DB_NAME" {
+  value = azurerm_sql_database.default.name
+}
+output "DB_USER" {
+  value = var.DB_USERNAME
+}
+output "DB_PASSWORD" {
+  value = random_password.db_password.result
 }
