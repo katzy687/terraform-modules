@@ -25,6 +25,12 @@ locals {
   # sandbox_id = "sb${substr( uuid() , 0 ,6)}"
 }
 
+resource "random_password" "password" {
+  length           = 16
+  special          = true
+  override_special = "!#$%&*()-_=+[]{}<>:?"
+}
+
 data "aws_subnet_ids" "apps_subnets" {
   vpc_id = var.vpc_id
   filter {
@@ -52,7 +58,7 @@ resource "aws_db_instance" "default" {
   identifier           = "rds-${var.sandbox_id}"
   name                 = "${var.db_name}"
   username             = "${var.username}"
-  password             = "${var.password}"
+  password             = "${random_password.password.result}"
   publicly_accessible  = true
   db_subnet_group_name = "${aws_db_subnet_group.rds.id}"
   vpc_security_group_ids    = ["${aws_security_group.rds.id}"]

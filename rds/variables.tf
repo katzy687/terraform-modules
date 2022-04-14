@@ -10,11 +10,6 @@ variable "username" {
   description = "User name"
 }
 
-variable "password" {
-  description = "Database password"
-  sensitive = true
-}
-
 variable "vpc_id" {
   description = "Torque sandbox vpc"
   default = "vpc-02e3bca90b081cd0f"
