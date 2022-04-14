@@ -22,7 +22,7 @@ locals {
     "large" = "db.t2.large"
   }
   instance_class = lookup(local.sizeMap, lower(var.size), "db.t4g.medium")
-  sandbox_id = "sb${substr( uuid() , 0 ,6)}"
+  # sandbox_id = "sb${substr( uuid() , 0 ,6)}"
 }
 
 data "aws_subnet_ids" "apps_subnets" {
@@ -34,7 +34,7 @@ data "aws_subnet_ids" "apps_subnets" {
 }
 
 resource "aws_db_subnet_group" "rds" {
-  name = "rds-${local.sandbox_id}-subnet-group"
+  name = "rds-${var.sandbox_id}-subnet-group"
   subnet_ids = data.aws_subnet_ids.apps_subnets.ids
 
   tags = {
@@ -49,7 +49,7 @@ resource "aws_db_instance" "default" {
   engine               = var.engine
   engine_version       = var.engine_version
   instance_class       = local.instance_class
-  identifier           = "rds-${local.sandbox_id}"
+  identifier           = "rds-${var.sandbox_id}"
   name                 = "${var.db_name}"
   username             = "${var.username}"
   password             = "${var.password}"
