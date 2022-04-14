@@ -1,5 +1,5 @@
 resource "aws_security_group" "rds" {
-  name        = "rds-${local.sandbox_id}_sg"
+  name        = "rds-${var.sandbox_id}_sg"
   description = "Allow all inbound traffic"
   vpc_id      = "${var.vpc_id}"
 
