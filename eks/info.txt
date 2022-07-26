@@ -1,0 +1,5 @@
+Assumption:
+
+Works with public EKS
+For private: customer responsibility to make sure networking is set up
+ 
