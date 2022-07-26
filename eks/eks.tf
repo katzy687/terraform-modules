@@ -31,8 +31,9 @@ module "eks" {
       ami_type = "BOTTLEROCKET_x86_64"
       platform = "bottlerocket"
       instance_types       = [var.instance_type]
-      asg_desired_capacity = 1
-      asg_max_size         = 2
+      min_size     = var.min_node_size
+      max_size     = var.max_node_size
+      desired_size = var.desired_node_size
       subnet_ids           = module.vpc.public_subnets
     }
   }

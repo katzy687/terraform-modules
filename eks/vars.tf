@@ -11,6 +11,21 @@ variable "aws_region" {
   default = "us-west-2"
 }
 
+variable "max_node_size" {
+  type = number
+  default = 5
+}
+
+variable "min_node_size" {
+  type = number
+  default = 1
+}
+
+variable "desired_node_size" {
+  type = number
+  default = 2
+}
+
 variable "SANDBOX_ID" {
   default = "test"
 }
