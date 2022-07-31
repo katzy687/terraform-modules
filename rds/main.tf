@@ -39,9 +39,20 @@ data "aws_subnet_ids" "apps_subnets" {
   }
 }
 
+data "aws_availability_zones" "available" {
+  state = "available"
+}
+
+resource "aws_subnet" "secondary" {
+  vpc_id = var.vpc_id
+  availability_zone = data.aws_availability_zones.available.names[1]
+
+  # ...
+}
+
 resource "aws_db_subnet_group" "rds" {
   name = "rds-${var.sandbox_id}-subnet-group"
-  subnet_ids = data.aws_subnet_ids.apps_subnets.ids
+  subnet_ids = concat(data.aws_subnet_ids.apps_subnets.ids, [aws_subnet.secondary.id])
 
   tags = {
     Name = "RDS-subnet-group"
