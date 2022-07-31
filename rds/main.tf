@@ -43,9 +43,11 @@ data "aws_availability_zones" "available" {
   state = "available"
 }
 
+
 resource "aws_subnet" "secondary" {
   vpc_id = var.vpc_id
   availability_zone = data.aws_availability_zones.available.names[1]
+  cidr_block = cidrsubnet(data.aws_vpc.selected.cidr_block, 4, 1)
 
   # ...
 }
