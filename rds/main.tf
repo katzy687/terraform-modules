@@ -34,8 +34,8 @@ resource "random_password" "password" {
 data "aws_subnet_ids" "apps_subnets" {
   vpc_id = var.vpc_id
   filter {
-    name = "tag:Name"
-    values = ["app-subnet*"]
+    name = "tag:ReservationId"
+    values = [var.sandbox_id]
   }
 }
 
