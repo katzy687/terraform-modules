@@ -54,7 +54,7 @@ resource "aws_subnet" "secondary" {
 
 resource "aws_db_subnet_group" "rds" {
   name = "rds-${var.sandbox_id}-subnet-group"
-  subnet_ids = concat(data.aws_subnet_ids.apps_subnets.ids, [aws_subnet.secondary.id])
+  subnet_ids = concat(tolist(data.aws_subnet_ids.apps_subnets.ids), [aws_subnet.secondary.id])
 
   tags = {
     Name = "RDS-subnet-group"
