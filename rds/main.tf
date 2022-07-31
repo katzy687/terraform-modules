@@ -39,14 +39,14 @@ data "aws_subnet_ids" "apps_subnets" {
   }
 }
 
-resource "aws_db_subnet_group" "rds" {
-  name = "rds-${var.sandbox_id}-subnet-group"
-  subnet_ids = data.aws_subnet_ids.apps_subnets.ids
+# resource "aws_db_subnet_group" "rds" {
+#   name = "rds-${var.sandbox_id}-subnet-group"
+#   subnet_ids = data.aws_subnet_ids.apps_subnets.ids
 
-  tags = {
-    Name = "RDS-subnet-group"
-  }
-}
+#   tags = {
+#     Name = "RDS-subnet-group"
+#   }
+# }
 
 
 resource "aws_db_instance" "default" {
@@ -60,7 +60,8 @@ resource "aws_db_instance" "default" {
   username             = "${var.username}"
   password             = "${random_password.password.result}"
   publicly_accessible  = true
-  db_subnet_group_name = "${aws_db_subnet_group.rds.id}"
+  # db_subnet_group_name = "${aws_db_subnet_group.rds.id}"
+  db_subnet_group_name = "natti-test"
   vpc_security_group_ids    = ["${aws_security_group.rds.id}"]
   skip_final_snapshot       = true
   final_snapshot_identifier = "Ignore"
