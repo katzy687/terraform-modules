@@ -30,28 +30,10 @@ resource "random_password" "password" {
   override_special = "!#$%&*()-_=+[]{}<>:?"
 }
 
-data "aws_subnet_ids" "apps_subnets" {
-  vpc_id = var.vpc_id
-  filter {
-    name   = "tag:ReservationId"
-    values = [var.sandbox_id]
-  }
-}
-
-data "aws_availability_zones" "available" {
-  state = "available"
-}
-
-
-resource "aws_subnet" "secondary" {
-  vpc_id            = var.vpc_id
-  availability_zone = data.aws_availability_zones.available.names[1]
-  cidr_block        = cidrsubnet(data.aws_vpc.default.cidr_block, 4, 1)
-}
 
 resource "aws_db_subnet_group" "rds" {
   name       = "rds-${var.sandbox_id}-subnet-group"
-  subnet_ids = concat(tolist(data.aws_subnet_ids.apps_subnets.ids), [aws_subnet.secondary.id])
+  subnet_ids = split(",", var.subnets) 
 
   tags = {
     Name = "RDS-subnet-group"

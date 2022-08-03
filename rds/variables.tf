@@ -63,3 +63,7 @@ variable "size" {
     error_message = "Invalid database size. Options are: small, medium, or large."
   }
 }
+
+variable "subnets" {
+    description = "list of subnet ids"
+}
